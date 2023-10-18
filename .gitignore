@@ -1,0 +1,32 @@
+# Compiled Object files, Static and Dynamic libs (Shared Objects)
+*.o
+*.a
+*.so
+
+# Folders
+/_obj/
+/_test/
+/vendor/
+
+# Output files
+*.exe
+*.test
+*.prof
+
+# Binary files
+*.bin
+
+# Log files
+*.log
+
+# macOS
+.DS_Store
+
+# Go specific
+.idea/
+.vscode/
+*.iml
+/.idea
+
+# Dependency directories (comment these out if you want to include them in version control)
+# vendor/
