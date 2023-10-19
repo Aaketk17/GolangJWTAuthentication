@@ -30,3 +30,6 @@
 
 # Dependency directories (comment these out if you want to include them in version control)
 # vendor/
+
+.env
+.env*
