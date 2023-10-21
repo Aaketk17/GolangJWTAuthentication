@@ -17,10 +17,10 @@ import (
 
 type SignedDetails struct {
 	Email     string `json:"email"`
-	FirstName string `json:"fisrtname"`
-	LastName  string `json:"lastname"`
+	FirstName string `json:"fisrtName"`
+	LastName  string `json:"lastName"`
 	Uid       string `json:"uid"`
-	UserType  string `json:"usertype"`
+	UserType  string `json:"userType"`
 	jwt.RegisteredClaims
 }
 
@@ -76,13 +76,13 @@ func UpdateAllTokens(signedToken string, signedRefreshToken string, userId strin
 
 	var updateObject primitive.D
 	updateObject = append(updateObject, bson.E{Key: "token", Value: signedToken})
-	updateObject = append(updateObject, bson.E{Key: "refreshToken", Value: signedRefreshToken})
+	updateObject = append(updateObject, bson.E{Key: "refreshtoken", Value: signedRefreshToken})
 
 	UpdatedAt, _ := time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
-	updateObject = append(updateObject, bson.E{Key: "updatedAt", Value: UpdatedAt})
+	updateObject = append(updateObject, bson.E{Key: "updatedat", Value: UpdatedAt})
 
 	upsert := true
-	filter := bson.M{"userId": userId}
+	filter := bson.M{"userid": userId}
 	opt := options.UpdateOptions{
 		Upsert: &upsert,
 	}
@@ -116,6 +116,5 @@ func ValidateToken(signedToken string) (claims *SignedDetails, msg string) {
 		msg = err.Error()
 		return
 	}
-
 	return claims, msg
 }

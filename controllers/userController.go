@@ -71,6 +71,7 @@ func SignUp(c *gin.Context) {
 
 	if emailCount > 0 {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "This email adddress already taken"})
+		return
 	}
 
 	phoneCount, err := userCollection.CountDocuments(ctx, bson.M{"phone": user.Phone})
@@ -82,6 +83,7 @@ func SignUp(c *gin.Context) {
 
 	if phoneCount > 0 {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "This Phone already taken"})
+		return
 	}
 
 	userPwd := HashPassword(*user.Password)
@@ -139,7 +141,7 @@ func Login(c *gin.Context) {
 	token, refreshToken, _ := helper.GenerateTokens(*foundUser.Email, *foundUser.FirstName, *foundUser.LastName, *foundUser.UserType, foundUser.UserID)
 	helper.UpdateAllTokens(token, refreshToken, foundUser.UserID)
 
-	findErrTwo := userCollection.FindOne(ctx, bson.M{"userId": foundUser.UserID}).Decode(&foundUser) //!
+	findErrTwo := userCollection.FindOne(ctx, bson.M{"userid": foundUser.UserID}).Decode(&foundUser) //!
 	if findErrTwo != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": findErr.Error()})
 		return
@@ -206,7 +208,7 @@ func GetUser(c *gin.Context) {
 	var ctx, cancel = context.WithTimeout(context.Background(), 100*time.Second)
 
 	var user models.User
-	err = userCollection.FindOne(ctx, bson.M{"userId": userId}).Decode(&user)
+	err = userCollection.FindOne(ctx, bson.M{"userid": userId}).Decode(&user)
 	defer cancel()
 	if err == mongo.ErrNoDocuments {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Record does not exists"})

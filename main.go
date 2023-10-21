@@ -8,10 +8,10 @@ import (
 )
 
 func main() {
-	port := os.Getenv("PORT")
+	PORT := os.Getenv("PORT")
 
-	if port == "" {
-		port = "8080"
+	if PORT == "" {
+		PORT = "8080"
 	}
 
 	router := gin.Default()
@@ -19,6 +19,6 @@ func main() {
 	routes.AuthRoutes(router)
 	routes.UserRoutes(router)
 
-	router.Run(":8080")
+	router.Run(":" + PORT)
 
 }
